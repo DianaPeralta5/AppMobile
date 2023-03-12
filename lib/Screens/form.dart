@@ -167,8 +167,6 @@ class Formulario2Screen extends StatelessWidget {
   }
 }
 
-enum patologia { si, no, nada}
-enum farmaco { si, no, nada}
 
 class Formulario2 extends StatefulWidget {
   const Formulario2({super.key});
@@ -177,6 +175,8 @@ class Formulario2 extends StatefulWidget {
   State<Formulario2> createState() => _Formulario2State();
 }
 
+enum patologia { si, no, nada}
+enum farmaco { si, no, nada}
 class _Formulario2State extends State<Formulario2>{
      farmaco? _farmaco = farmaco.no;
      patologia? _patologia = patologia.no;
@@ -304,29 +304,146 @@ class _Formulario2State extends State<Formulario2>{
           ),
         ),
         Container(
-                child:ButtonBar(
-                  alignment: MainAxisAlignment.center,
-                  buttonPadding:EdgeInsets.symmetric(
-                   horizontal: 10,
-                   vertical: 10
-                ),
-              children: [
-                ElevatedButton(
-                  child: Text("Siguiente"),
-                  style: ElevatedButton.styleFrom(
+          child:ButtonBar(
+            alignment: MainAxisAlignment.center,
+            buttonPadding:EdgeInsets.symmetric(
+              horizontal: 10,
+              vertical: 10
+            ),
+            children: [
+              ElevatedButton(
+                child: Text("Siguiente"),
+                style: ElevatedButton.styleFrom(
                     primary: Colors.lightBlue,
                     minimumSize: Size(500, 40),
-                  ),
-                  onPressed: () => {
-                     Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => Formulario2Screen()),
-                    ),
-                  },
                 ),
-              ]
+                onPressed: () => {
+                  Navigator.push(
+                     context,
+                     MaterialPageRoute(builder: (context) => Formulario3Screen()),
+                  ),
+                },
               ),
+            ]
+          ),
+        ),
+      ]
+     );   
+  }
+}
+
+
+class Formulario3Screen extends StatelessWidget {
+  const Formulario3Screen({super.key});
+
+ @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        appBar: AppBar(
+        backgroundColor: Colors.white,
+          title: Image.asset(
+            'assets/logo.jpg',
+            height: 45,
+          ),
+          centerTitle: true,          
+        ),
+        body: const Formulario3(),
+    );
+  }
+}
+
+enum actividad { ligera, moderada, activa, muy}
+class Formulario3 extends StatefulWidget {
+  const Formulario3({super.key});
+
+ @override
+  State<Formulario3> createState() => _Formulario3State();
+}
+class _Formulario3State extends State<Formulario3>{
+     actividad? _actividad = actividad.activa;
+  @override
+  Widget build(BuildContext context) {
+    return  Column(
+      children: <Widget>[
+        Container(
+          child: Padding(
+            padding: EdgeInsets.only (
+              top: 30.0,
+              bottom: 20.0
+            ),
+            child: Text(
+              'Formulario de registro',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 20.0
               ),
+            ),
+            
+          ),
+        ),
+        Container(
+          child: Padding(
+            padding: EdgeInsets.only (
+              top: 20.0,
+              bottom: 5.0
+            ),
+            child: Text(
+              '¿Como es tu actividad diaria?',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 15.0
+              ),
+            ),
+          ),
+        ),
+        ListTile(
+          title: const Text('Ligera'),
+          leading: Radio<actividad>(
+            value: actividad.ligera,
+            groupValue: _actividad,
+            onChanged: (actividad? value) {
+              setState(() {
+                _actividad = value;
+              });
+            },
+          ),
+        ),
+        ListTile(
+          title: const Text('Moderada'),
+          leading: Radio<actividad>(
+            value: actividad.moderada,
+            groupValue: _actividad,
+            onChanged: (actividad? value) {
+              setState(() {
+                _actividad = value;
+              });
+            },
+          ),
+        ),
+        ListTile(
+          title: const Text('Activa'),
+          leading: Radio<actividad>(
+            value: actividad.activa,
+            groupValue: _actividad,
+            onChanged: (actividad? value) {
+              setState(() {
+                _actividad = value;
+              });
+            },
+          ),
+        ),
+        ListTile(
+          title: const Text('Muy activa'),
+          leading: Radio<actividad>(
+            value: actividad.muy,
+            groupValue: _actividad,
+            onChanged: (actividad? value) {
+              setState(() {
+                _actividad = value;
+              });
+            },
+          ),
+        ),
      ]
      );   
   }
