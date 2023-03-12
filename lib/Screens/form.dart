@@ -1,12 +1,43 @@
 import 'package:flutter/material.dart';
+import 'package:formulario/widgets/custom_input_field.dart';
 
-class FormularioScreen extends StatelessWidget {
+
+final GlobalKey<FormState> UsuarioKey = GlobalKey<FormState>();
+
+final Map<String, String> datosUsuario = {
+      'nombre': '',
+      'edad': '',
+      'sexo': '',
+      'peso': '',
+      'altura': '',
+      'actividad': '',
+      'patologia': '',
+      'farmaco': '',
+      'habitos': '',
+      // 'embarazo': '',
+    };
+class FormularioScreen extends StatefulWidget {
   const FormularioScreen({super.key});
 
  @override
+  State<StatefulWidget> createState() {
+    return FormularioState();
+  }
+}
+
+enum SingingCharacter { hombre, mujer}
+class FormularioState extends State<StatefulWidget>{
+  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
+    SingingCharacter? _character = SingingCharacter.hombre;
+    formItemsDesign(icon, item) {
+      return Padding(
+        padding: EdgeInsets.symmetric(vertical: 7),
+        child: Card(child: ListTile(leading: Icon(icon), title: item)),
+      );
+    }
+     return  Scaffold(
+       appBar: AppBar(
         backgroundColor: Colors.white,
           title: Image.asset(
             'assets/logo.jpg',
@@ -14,33 +45,8 @@ class FormularioScreen extends StatelessWidget {
           ),
           centerTitle: true,          
         ),
-        body: const Formulario(),
-    );
-  }
-}
-
-enum SingingCharacter { hombre, mujer}
-
-class Formulario extends StatefulWidget {
-  const Formulario({super.key});
-
- @override
-  State<Formulario> createState() => _FormularioState();
-}
-
-class _FormularioState extends State<Formulario>{
-     SingingCharacter? _character = SingingCharacter.hombre;
-  formItemsDesign(icon, item) {
-    return Padding(
-      padding: EdgeInsets.symmetric(vertical: 7),
-      child: Card(child: ListTile(leading: Icon(icon), title: item)),
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-     return  Column(
-     children: <Widget>[
+      body: Column(
+        children: <Widget>[
         Container(
           child: Padding(
             padding: EdgeInsets.only (
@@ -56,105 +62,142 @@ class _FormularioState extends State<Formulario>{
             ),
           ),
         ),
-       formItemsDesign(
-           Icons.person,
-           TextFormField(
-             decoration: new InputDecoration(
-               labelText: 'Nombre y Apellidos',
-             ),
-           ),
-          ),
-          formItemsDesign(
-           Icons.calendar_month,
-           TextFormField(
-             decoration: new InputDecoration(
-               labelText: 'Edad',
-             ),
-           ),
-          ),
-          Container(
-            child: Text(
-              "Sexo: ",
-              style: const TextStyle(fontWeight: FontWeight.bold)
-          ),
-          ),
-          ListTile(
-          title: const Text('Hombre'),
-          leading: Radio<SingingCharacter>(
-            value: SingingCharacter.hombre,
-            groupValue: _character,
-            onChanged: (SingingCharacter? value) {
-              setState(() {
-                _character = value;
-              });
-            },
-          ),
-        ),
-        ListTile(
-          title: const Text('Mujer'),
-          leading: Radio<SingingCharacter>(
-            value: SingingCharacter.mujer,
-            groupValue: _character,
-            onChanged: (SingingCharacter? value) {
-              setState(() {
-                _character = value;
-              });
-            },
-          ),
-        ),
-        formItemsDesign(
-           Icons.accessibility_new_rounded,
-           TextFormField(
-             decoration: new InputDecoration(
-               labelText: 'Peso',
-             ),
-           ),
-          ),
-        formItemsDesign(
-           Icons.accessibility_new_rounded,
-           TextFormField(
-             decoration: new InputDecoration(
-               labelText: 'Altura',
-             ),
-           ),
-          ),
         Container(
-                child:ButtonBar(
-                  alignment: MainAxisAlignment.center,
-                  buttonPadding:EdgeInsets.symmetric(
-                   horizontal: 10,
-                   vertical: 10
-                ),
+          child: Form(
+            key: UsuarioKey,
+            child: Column(
               children: [
-                ElevatedButton(
-                  child: Text("Siguiente"),
-                  style: ElevatedButton.styleFrom(
-                    primary: Colors.lightBlue,
-                    minimumSize: Size(500, 40),
+                formItemsDesign(
+                  Icons.person,
+                  CustomInputField(
+                    labelText: 'Nombre y Apellidos',
+                    hintText: '',
+                    formProperty: 'nombre',
+                    formValues: datosUsuario,
+                    numCaracteresMinimo: 4,
+                    obligatorio: true,
                   ),
-                  onPressed: () => {
-                     Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => Formulario2Screen()),
-                    ),
-                  },
                 ),
-              ]
-              ),
-              ),
-     ]
-     );   
+                formItemsDesign(
+                  Icons.calendar_month,
+                  CustomInputField(
+                    labelText: 'Edad',
+                    hintText: '',
+                    formProperty: 'edad',
+                    formValues: datosUsuario,
+                    numCaracteresMinimo: 1,
+                    obligatorio: true,
+                  ),
+                ),
+                Container(
+                  child: Text(
+                    "Sexo: ",
+                    style: const TextStyle(fontWeight: FontWeight.bold)
+                  ),
+                ),
+                ListTile(
+                  title: const Text('Hombre'),
+                    // formProperty: 'edad',
+                    // formValues: datosUsuario,
+                    // obligatorio: true,
+                  leading: Radio<SingingCharacter>(
+                    value: SingingCharacter.hombre,
+                    groupValue: _character,
+                    onChanged: (SingingCharacter? value) {
+                      setState(() {
+                        _character = value;
+                      });
+                    },
+                  ),
+                ),
+                ListTile(
+                  title: const Text('Mujer'),
+                  leading: Radio<SingingCharacter>(
+                    value: SingingCharacter.mujer,
+                    groupValue: _character,
+                    onChanged: (SingingCharacter? value) {
+                      setState(() {
+                        _character = value;
+                      });
+                    },
+                  ),
+                ),
+                formItemsDesign(
+                  Icons.accessibility_new_rounded,
+                  CustomInputField(
+                    labelText: 'Peso',
+                    hintText: '',
+                    formProperty: 'peso',
+                    formValues: datosUsuario,
+                    numCaracteresMinimo: 2,
+                    obligatorio: true,
+                  ),
+                ),
+                formItemsDesign(
+                  Icons.accessibility_new_rounded,
+                  CustomInputField(
+                    labelText: 'Altura',
+                    hintText: '',
+                    formProperty: 'altura',
+                    formValues: datosUsuario,
+                    numCaracteresMinimo: 2,
+                    obligatorio: true,
+                  ),
+                ),
+                Container(
+                  child:ButtonBar(
+                    alignment: MainAxisAlignment.center,
+                    buttonPadding:EdgeInsets.symmetric(
+                      horizontal: 10,
+                      vertical: 10
+                    ),
+                    children: [
+                      ElevatedButton(
+                        child: Text("Siguiente"),
+                        style: ElevatedButton.styleFrom(
+                          primary: Colors.lightBlue,
+                          minimumSize: Size(500, 40),
+                        ),
+                        onPressed: () => {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => Formulario2Screen()),
+                          ),
+                        },
+                      ),
+                    ]
+                  ),
+                ),
+              ],
+            )
+          ),
+        )
+      ]
+    ),
+  );   
   }
 }
 
 
-class Formulario2Screen extends StatelessWidget {
+class Formulario2Screen extends StatefulWidget {
   const Formulario2Screen({super.key});
 
  @override
+  State<StatefulWidget> createState() {
+    return _Formulario2State();
+  }
+}
+
+enum patologia { si, no, nada}
+enum farmaco { si, no, nada}
+class _Formulario2State extends State<Formulario2Screen>{
+     farmaco? _farmaco = farmaco.no;
+     patologia? _patologia = patologia.no;
+
+  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
+    return  Scaffold(
+      appBar: AppBar(
         backgroundColor: Colors.white,
           title: Image.asset(
             'assets/logo.jpg',
@@ -162,60 +205,38 @@ class Formulario2Screen extends StatelessWidget {
           ),
           centerTitle: true,          
         ),
-        body: const Formulario2(),
-    );
-  }
-}
-
-
-class Formulario2 extends StatefulWidget {
-  const Formulario2({super.key});
-
- @override
-  State<Formulario2> createState() => _Formulario2State();
-}
-
-enum patologia { si, no, nada}
-enum farmaco { si, no, nada}
-class _Formulario2State extends State<Formulario2>{
-     farmaco? _farmaco = farmaco.no;
-     patologia? _patologia = patologia.no;
-
-  @override
-  Widget build(BuildContext context) {
-    return  Column(
-      children: <Widget>[
-        Container(
-          child: Padding(
-            padding: EdgeInsets.only (
-              top: 30.0,
-              bottom: 20.0
-            ),
-            child: Text(
-              'Formulario de registro',
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 20.0
+      body: Column(
+        children: <Widget>[
+          Container(
+            child: Padding(
+              padding: EdgeInsets.only (
+                top: 30.0,
+                bottom: 20.0
               ),
-            ),
-            
-          ),
-        ),
-        Container(
-          child: Padding(
-            padding: EdgeInsets.only (
-              top: 20.0,
-              bottom: 5.0
-            ),
-            child: Text(
-              '¿Tomas algún farmaco a considerar?',
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 15.0
+              child: Text(
+                'Formulario de registro',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20.0
+                ),
               ),
             ),
           ),
-        ),
+          Container(
+            child: Padding(
+              padding: EdgeInsets.only (
+                top: 20.0,
+                bottom: 5.0
+              ),
+              child: Text(
+                '¿Tomas algún farmaco a considerar?',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 15.0
+                ),
+              ),
+            ),
+          ),
         ListTile(
           title: const Text('Si'),
           leading: Radio<farmaco>(
@@ -328,18 +349,28 @@ class _Formulario2State extends State<Formulario2>{
           ),
         ),
       ]
-     );   
+     )
+    );   
   }
 }
 
 
-class Formulario3Screen extends StatelessWidget {
+class Formulario3Screen extends StatefulWidget {
   const Formulario3Screen({super.key});
 
- @override
+  @override
+  State<StatefulWidget> createState() {
+    return Formulario3();
+  }
+}
+
+enum actividad { ligera, moderada, activa, muy}
+class Formulario3 extends State<StatefulWidget>{
+     actividad? _actividad = actividad.activa;
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
+      appBar: AppBar(
         backgroundColor: Colors.white,
           title: Image.asset(
             'assets/logo.jpg',
@@ -347,105 +378,90 @@ class Formulario3Screen extends StatelessWidget {
           ),
           centerTitle: true,          
         ),
-        body: const Formulario3(),
-    );
-  }
-}
-
-enum actividad { ligera, moderada, activa, muy}
-class Formulario3 extends StatefulWidget {
-  const Formulario3({super.key});
-
- @override
-  State<Formulario3> createState() => _Formulario3State();
-}
-class _Formulario3State extends State<Formulario3>{
-     actividad? _actividad = actividad.activa;
-  @override
-  Widget build(BuildContext context) {
-    return  Column(
-      children: <Widget>[
-        Container(
-          child: Padding(
-            padding: EdgeInsets.only (
-              top: 30.0,
-              bottom: 20.0
-            ),
-            child: Text(
-              'Formulario de registro',
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 20.0
+      body: Column(
+        children: <Widget>[
+          Container(
+            child: Padding(
+              padding: EdgeInsets.only (
+                top: 30.0,
+                bottom: 20.0
               ),
+              child: Text(
+                'Formulario de registro',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20.0
+                ),
+              ),
+              
             ),
-            
           ),
-        ),
-        Container(
-          child: Padding(
-            padding: EdgeInsets.only (
-              top: 20.0,
-              bottom: 5.0
-            ),
-            child: Text(
-              '¿Como es tu actividad diaria?',
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 15.0
+          Container(
+            child: Padding(
+              padding: EdgeInsets.only (
+                top: 20.0,
+                bottom: 5.0
+              ),
+              child: Text(
+                '¿Como es tu actividad diaria?',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 15.0
+                ),
               ),
             ),
           ),
-        ),
-        ListTile(
-          title: const Text('Ligera'),
-          leading: Radio<actividad>(
-            value: actividad.ligera,
-            groupValue: _actividad,
-            onChanged: (actividad? value) {
-              setState(() {
-                _actividad = value;
-              });
-            },
+          ListTile(
+            title: const Text('Ligera'),
+            leading: Radio<actividad>(
+              value: actividad.ligera,
+              groupValue: _actividad,
+              onChanged: (actividad? value) {
+                setState(() {
+                  _actividad = value;
+                });
+              },
+            ),
           ),
-        ),
-        ListTile(
-          title: const Text('Moderada'),
-          leading: Radio<actividad>(
-            value: actividad.moderada,
-            groupValue: _actividad,
-            onChanged: (actividad? value) {
-              setState(() {
-                _actividad = value;
-              });
-            },
+          ListTile(
+            title: const Text('Moderada'),
+            leading: Radio<actividad>(
+              value: actividad.moderada,
+              groupValue: _actividad,
+              onChanged: (actividad? value) {
+                setState(() {
+                  _actividad = value;
+                });
+              },
+            ),
           ),
-        ),
-        ListTile(
-          title: const Text('Activa'),
-          leading: Radio<actividad>(
-            value: actividad.activa,
-            groupValue: _actividad,
-            onChanged: (actividad? value) {
-              setState(() {
-                _actividad = value;
-              });
-            },
+          ListTile(
+            title: const Text('Activa'),
+            leading: Radio<actividad>(
+              value: actividad.activa,
+              groupValue: _actividad,
+              onChanged: (actividad? value) {
+                setState(() {
+                  _actividad = value;
+                });
+              },
+            ),
           ),
-        ),
-        ListTile(
-          title: const Text('Muy activa'),
-          leading: Radio<actividad>(
-            value: actividad.muy,
-            groupValue: _actividad,
-            onChanged: (actividad? value) {
-              setState(() {
-                _actividad = value;
-              });
-            },
+          ListTile(
+            title: const Text('Muy activa'),
+            leading: Radio<actividad>(
+              value: actividad.muy,
+              groupValue: _actividad,
+              onChanged: (actividad? value) {
+                setState(() {
+                  _actividad = value;
+                });
+              },
+            ),
           ),
-        ),
-     ]
-     );   
+      ]
+     )
+    );  
   }
 }
 
