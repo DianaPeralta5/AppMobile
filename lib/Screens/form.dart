@@ -7,44 +7,17 @@ class FormularioScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: const AppBarDefault()
-        ),
-        body: const Formulario(),
-    );
-  }
-}
-
-class AppBarDefault extends StatefulWidget {
-  const AppBarDefault({super.key});
-  
-  @override
-  State<StatefulWidget> createState() => _AppBarDefaultState();
-}
-class _AppBarDefaultState extends State<AppBarDefault>{
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
         backgroundColor: Colors.white,
           title: Image.asset(
             'assets/logo.jpg',
             height: 45,
           ),
-          centerTitle: true,
-
-          
+          centerTitle: true,          
         ),
-      body: PageView(
-        controller: PageController(initialPage: 2),
-        children: const [
-          BienvenidoScreen(),
-          FormularioScreen()
-        ],
-      ),
+        body: const Formulario(),
     );
   }
 }
-
 
 enum SingingCharacter { hombre, mujer}
 
@@ -68,6 +41,21 @@ class _FormularioState extends State<Formulario>{
   Widget build(BuildContext context) {
      return  Column(
      children: <Widget>[
+        Container(
+          child: Padding(
+            padding: EdgeInsets.only (
+                    top: 30.0,
+                    bottom: 20.0
+                  ),
+            child: Text(
+              'Formulario de registro',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 20.0
+              ),
+            ),
+          ),
+        ),
        formItemsDesign(
            Icons.person,
            TextFormField(
@@ -84,12 +72,11 @@ class _FormularioState extends State<Formulario>{
              ),
            ),
           ),
-          
-            Text(
+          Container(
+            child: Text(
               "Sexo: ",
-              textAlign: TextAlign.start,
               style: const TextStyle(fontWeight: FontWeight.bold)
-              
+          ),
           ),
           ListTile(
           title: const Text('Hombre'),
@@ -131,10 +118,221 @@ class _FormularioState extends State<Formulario>{
              ),
            ),
           ),
+        Container(
+                child:ButtonBar(
+                  alignment: MainAxisAlignment.center,
+                  buttonPadding:EdgeInsets.symmetric(
+                   horizontal: 10,
+                   vertical: 10
+                ),
+              children: [
+                ElevatedButton(
+                  child: Text("Siguiente"),
+                  style: ElevatedButton.styleFrom(
+                    primary: Colors.lightBlue,
+                    minimumSize: Size(500, 40),
+                  ),
+                  onPressed: () => {
+                     Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => Formulario2Screen()),
+                    ),
+                  },
+                ),
+              ]
+              ),
+              ),
      ]
      );   
   }
 }
+
+
+class Formulario2Screen extends StatelessWidget {
+  const Formulario2Screen({super.key});
+
+ @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        appBar: AppBar(
+        backgroundColor: Colors.white,
+          title: Image.asset(
+            'assets/logo.jpg',
+            height: 45,
+          ),
+          centerTitle: true,          
+        ),
+        body: const Formulario2(),
+    );
+  }
+}
+
+enum patologia { si, no, nada}
+enum farmaco { si, no, nada}
+
+class Formulario2 extends StatefulWidget {
+  const Formulario2({super.key});
+
+ @override
+  State<Formulario2> createState() => _Formulario2State();
+}
+
+class _Formulario2State extends State<Formulario2>{
+     farmaco? _farmaco = farmaco.no;
+     patologia? _patologia = patologia.no;
+
+  @override
+  Widget build(BuildContext context) {
+    return  Column(
+      children: <Widget>[
+        Container(
+          child: Padding(
+            padding: EdgeInsets.only (
+              top: 30.0,
+              bottom: 20.0
+            ),
+            child: Text(
+              'Formulario de registro',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 20.0
+              ),
+            ),
+            
+          ),
+        ),
+        Container(
+          child: Padding(
+            padding: EdgeInsets.only (
+              top: 20.0,
+              bottom: 5.0
+            ),
+            child: Text(
+              '¿Tomas algún farmaco a considerar?',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 15.0
+              ),
+            ),
+          ),
+        ),
+        ListTile(
+          title: const Text('Si'),
+          leading: Radio<farmaco>(
+            value: farmaco.si,
+            groupValue: _farmaco,
+            onChanged: (farmaco? value) {
+              setState(() {
+                _farmaco = value;
+              });
+            },
+          ),
+        ),
+        ListTile(
+          title: const Text('No'),
+          leading: Radio<farmaco>(
+            value: farmaco.no,
+            groupValue: _farmaco,
+            onChanged: (farmaco? value) {
+              setState(() {
+                _farmaco = value;
+              });
+            },
+          ),
+        ),
+        ListTile(
+          title: const Text('Nada a considerar'),
+          leading: Radio<farmaco>(
+            value: farmaco.nada,
+            groupValue: _farmaco,
+            onChanged: (farmaco? value) {
+              setState(() {
+                _farmaco = value;
+              });
+            },
+          ),
+        ),
+        Container(
+          child: Padding(
+            padding: EdgeInsets.only (
+              top: 20.0,
+              bottom: 5.0
+            ),
+            child: Text(
+              '¿Tiene alguna patologia a considerar?',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 15.0
+              ),
+            ),
+          ),
+        ),
+        ListTile(
+          title: const Text('Si'),
+          leading: Radio<patologia>(
+            value: patologia.si,
+            groupValue: _patologia,
+            onChanged: (patologia? value) {
+              setState(() {
+                _patologia = value;
+              });
+            },
+          ),
+        ),
+        ListTile(
+          title: const Text('No'),
+          leading: Radio<patologia>(
+            value: patologia.no,
+            groupValue: _patologia,
+            onChanged: (patologia? value) {
+              setState(() {
+                _patologia = value;
+              });
+            },
+          ),
+        ),
+        ListTile(
+          title: const Text('Nada a considerar'),
+          leading: Radio<patologia>(
+            value: patologia.nada,
+            groupValue: _patologia,
+            onChanged: (patologia? value) {
+              setState(() {
+                _patologia = value;
+              });
+            },
+          ),
+        ),
+        Container(
+                child:ButtonBar(
+                  alignment: MainAxisAlignment.center,
+                  buttonPadding:EdgeInsets.symmetric(
+                   horizontal: 10,
+                   vertical: 10
+                ),
+              children: [
+                ElevatedButton(
+                  child: Text("Siguiente"),
+                  style: ElevatedButton.styleFrom(
+                    primary: Colors.lightBlue,
+                    minimumSize: Size(500, 40),
+                  ),
+                  onPressed: () => {
+                     Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => Formulario2Screen()),
+                    ),
+                  },
+                ),
+              ]
+              ),
+              ),
+     ]
+     );   
+  }
+}
+
+
 
   class BienvenidoScreen extends StatelessWidget { 
   const BienvenidoScreen({super.key});
@@ -142,7 +340,12 @@ class _FormularioState extends State<Formulario>{
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: const AppBarDefault()
+        backgroundColor: Colors.white,
+          title: Image.asset(
+            'assets/logo.jpg',
+            height: 45,
+          ),
+          centerTitle: true,          
         ),
         body: Column(
           children: <Widget>[
@@ -162,7 +365,7 @@ class _FormularioState extends State<Formulario>{
                   ),
                 ),
               ),
-              Container(
+            Container(
                     child: Padding(
                   padding: EdgeInsets.only (
                     top: 30.0,
@@ -175,7 +378,7 @@ class _FormularioState extends State<Formulario>{
                   ),
                 ),
               ),
-              Container(
+            Container(
                 child:ButtonBar(
                   alignment: MainAxisAlignment.center,
                   buttonPadding:EdgeInsets.symmetric(
@@ -199,7 +402,7 @@ class _FormularioState extends State<Formulario>{
               ]
               ),
               ),
-              Container(
+            Container(
                     child: Padding(
                   padding: EdgeInsets.only (
                     top: 220.0,
