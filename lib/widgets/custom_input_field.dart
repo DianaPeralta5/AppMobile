@@ -14,7 +14,7 @@ class CustomInputField extends StatelessWidget {
 
   //1 - required // 2 - no required
   final bool obligatorio;
-  final int numCaracteresMinimo;
+  final int min;
 
   // Function? funcValidacion;
 
@@ -31,7 +31,7 @@ class CustomInputField extends StatelessWidget {
     required this.formValues,
     
     required this.obligatorio,
-    required this.numCaracteresMinimo
+    required this.min
     // KCZthis.funcValidacion = () {},
     // required int tipoInput
   }) : super(key: key);
@@ -44,7 +44,7 @@ class CustomInputField extends StatelessWidget {
     if (obligatorio) {
       f = (String value) {
         if (value == null) return 'Este campo es requerido';
-          return value.length < numCaracteresMinimo ? 'Mínimo de ' + numCaracteresMinimo.toString() + ' letras' : null;
+          return value.length < min ? 'Mínimo de ' + min.toString() + ' letras' : null;
       };
     }
 

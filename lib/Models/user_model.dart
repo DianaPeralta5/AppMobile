@@ -22,10 +22,10 @@ class UserModel {
 
   int? id;
   String nombre;  
-  int edad;
+  String edad;
   String sexo;
-  double peso;
-  double altura;
+  String peso;
+  String altura;
   String actividad; 
   String? patologia;
   String? farmaco;

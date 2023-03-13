@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:formulario/widgets/custom_input_field.dart';
-
+import 'package:formulario/models/user_model.dart';
+import 'package:formulario/providers/db_provider.dart';
+import 'package:formulario/widgets/custom_input_field.dart';
 
 final GlobalKey<FormState> UsuarioKey = GlobalKey<FormState>();
 
@@ -74,7 +76,7 @@ class FormularioState extends State<StatefulWidget>{
                     hintText: '',
                     formProperty: 'nombre',
                     formValues: datosUsuario,
-                    numCaracteresMinimo: 4,
+                    min: 4,
                     obligatorio: true,
                   ),
                 ),
@@ -85,7 +87,7 @@ class FormularioState extends State<StatefulWidget>{
                     hintText: '',
                     formProperty: 'edad',
                     formValues: datosUsuario,
-                    numCaracteresMinimo: 1,
+                    min: 1,
                     obligatorio: true,
                   ),
                 ),
@@ -103,6 +105,7 @@ class FormularioState extends State<StatefulWidget>{
                     onChanged: (SingingCharacter? value) {
                       setState(() {
                         _character = value;
+                        datosUsuario['sexo'] = 'Hombre';
                       });
                     },
                   ),
@@ -115,6 +118,7 @@ class FormularioState extends State<StatefulWidget>{
                     onChanged: (SingingCharacter? value) {
                       setState(() {
                         _character = value;
+                        datosUsuario['sexo'] = 'Mujer';
                       });
                     },
                   ),
@@ -126,7 +130,7 @@ class FormularioState extends State<StatefulWidget>{
                     hintText: '',
                     formProperty: 'peso',
                     formValues: datosUsuario,
-                    numCaracteresMinimo: 2,
+                    min: 2,
                     obligatorio: true,
                   ),
                 ),
@@ -137,7 +141,7 @@ class FormularioState extends State<StatefulWidget>{
                     hintText: '',
                     formProperty: 'altura',
                     formValues: datosUsuario,
-                    numCaracteresMinimo: 2,
+                    min: 2,
                     obligatorio: true,
                   ),
                 ),
@@ -416,6 +420,7 @@ class Formulario3 extends State<StatefulWidget>{
               onChanged: (actividad? value) {
                 setState(() {
                   _actividad = value;
+                datosUsuario['habitos'] = 'Ligera';
                 });
               },
             ),
@@ -428,6 +433,7 @@ class Formulario3 extends State<StatefulWidget>{
               onChanged: (actividad? value) {
                 setState(() {
                   _actividad = value;
+                datosUsuario['habitos'] = 'Moderada';
                 });
               },
             ),
@@ -440,6 +446,7 @@ class Formulario3 extends State<StatefulWidget>{
               onChanged: (actividad? value) {
                 setState(() {
                   _actividad = value;
+                datosUsuario['habitos'] = 'Activa';
                 });
               },
             ),
@@ -452,11 +459,34 @@ class Formulario3 extends State<StatefulWidget>{
               onChanged: (actividad? value) {
                 setState(() {
                   _actividad = value;
+                  datosUsuario['habitos'] = 'Muy activa';
                 });
               },
             ),
           ),
-      ]
+          ElevatedButton(
+            child: const SizedBox(
+            width: double.infinity,
+            child: Center(child: Text('Guardar'))),
+            onPressed: () {
+              if (!UsuarioKey.currentState!.validate()) {
+                print('Formulario no válido');
+                return;
+              }
+              // UserModel user = UserModel(
+              //   nombre: datosUsuario['nombre']!,
+              //   edad: datosUsuario['edad']!,
+              //   sexo: datosUsuario['sexo']!,
+              //   peso: datosUsuario['peso']!,
+              //   altura: datosUsuario['altura']!,
+              //   patologia: datosUsuario['patologia']!,
+              //   farmaco: datosUsuario['farmaco']!,
+              //   habitos: datosUsuario['habitos']!
+              // );
+              // DBProvider.db.nuevoUser(user);
+            },
+          ),
+        ]
      )
     );  
   }
@@ -553,7 +583,5 @@ class Formulario3 extends State<StatefulWidget>{
         )
     );
    }
+
 }
-
-
-

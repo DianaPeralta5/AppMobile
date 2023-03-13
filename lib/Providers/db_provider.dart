@@ -31,10 +31,13 @@ class DBProvider {
           CREATE TABLE Users(
             id INTEGER PRIMARY KEY,
             nombre TEXT,
-            apellidos TEXT,
-            email TEXT,
-            contrasena TEXT,
-            tipo TEXT
+            edad TEXT,
+            sexo TEXT,
+            peso TEXT,
+            altura TEXT,
+            patologia TEXT,
+            farmaco TEXT
+            habitos TEXT
           )
         ''');
     });
