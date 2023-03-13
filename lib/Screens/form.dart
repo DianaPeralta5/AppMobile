@@ -97,9 +97,6 @@ class FormularioState extends State<StatefulWidget>{
                 ),
                 ListTile(
                   title: const Text('Hombre'),
-                    // formProperty: 'edad',
-                    // formValues: datosUsuario,
-                    // obligatorio: true,
                   leading: Radio<SingingCharacter>(
                     value: SingingCharacter.hombre,
                     groupValue: _character,
