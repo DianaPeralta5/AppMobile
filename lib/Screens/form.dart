@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:formulario/widgets/custom_input_field.dart';
 import 'package:formulario/models/user_model.dart';
 import 'package:formulario/providers/db_provider.dart';
-import 'package:formulario/widgets/custom_input_field.dart';
 import 'package:formulario/Screens/api.dart';
 
 final GlobalKey<FormState> UsuarioKey = GlobalKey<FormState>();
@@ -21,7 +20,6 @@ final Map<String, String> datosUsuario = {
     };
 class FormularioScreen extends StatefulWidget {
   const FormularioScreen({super.key});
-
  @override
   State<StatefulWidget> createState() {
     return FormularioState();
@@ -30,8 +28,7 @@ class FormularioScreen extends StatefulWidget {
 
 enum SingingCharacter { hombre, mujer}
 class FormularioState extends State<StatefulWidget>{
-    SingingCharacter? _character = SingingCharacter.hombre;
-    
+  SingingCharacter? _character = SingingCharacter.hombre;    
   @override
   Widget build(BuildContext context) {
     datosUsuario['sexo'] = 'hombre';    
@@ -203,7 +200,9 @@ class FormularioState extends State<StatefulWidget>{
       )
   );   
   }
+  
 }
+
 
 
 class Formulario2Screen extends StatefulWidget {
@@ -651,5 +650,4 @@ class Formulario3 extends State<StatefulWidget>{
         )
     );
    }
-
 }

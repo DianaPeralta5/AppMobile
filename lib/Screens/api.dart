@@ -50,7 +50,7 @@ class _PantallaDatos extends State<PantallaDatos> {
   
   @override
   Widget build(BuildContext context) {
-    // getNotificacion();
+    getNotificacion();
     ObtenerDatos();
     return Scaffold(
       appBar: AppBar(
@@ -139,6 +139,11 @@ class _PantallaDatos extends State<PantallaDatos> {
   }
 
 
+  void getNotificacion() async {
+    String mensaje = "HOLI :)";
+        await NotificationProvider.notificationProvider.setup();
+        NotificationProvider.notificationProvider.mostrarNotificacion(mensaje);
+  }
 
   Future<int> sacarCodMunicipio() async {
     await GPSScreen.obtenerUbicacionGPS();
