@@ -42,26 +42,6 @@ class DBProvider {
           )
         ''');
       },
-      onUpgrade: (db, oldVersion, newVersion) async {
-        await db.execute('''
-              DROP TABLE Users
-          ''');
-        await db.execute('''
-          CREATE TABLE Users(
-            id INTEGER PRIMARY KEY,
-            nombre TEXT,
-            edad TEXT,
-            sexo TEXT,
-            embarazo TEXT,
-            peso TEXT,
-            altura TEXT,
-            patologia TEXT,
-            farmaco TEXT,
-            actividad TEXT,
-            habitos TEXT
-          )
-        ''');
-      },
     );
   }
 

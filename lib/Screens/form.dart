@@ -526,7 +526,7 @@ class Formulario3 extends State<StatefulWidget>{
           ElevatedButton(
             child: const SizedBox(
             width: double.infinity,
-            child: Center(child: Text('Guardar'))),
+            child: Center(child: Text('Guardar datos'))),
             onPressed: () {
               if (!UsuarioKey.currentState!.validate()) {
                 print('Formulario no válido');
@@ -547,48 +547,6 @@ class Formulario3 extends State<StatefulWidget>{
               DBProvider.db.nuevoUser(user);
             },
           ),
-          const SizedBox(height: 10),
-                  ElevatedButton(
-                    child: const SizedBox(
-                        width: double.infinity,
-                        child: Center(child: Text('Listar Usuarios'))),
-                    onPressed: () {
-                      //* Mostrar usuarios de la BD
-                      DBProvider.db.getTodosLosUsers();
-                    },
-                  ),
-                  const SizedBox(height: 10),
-                  ElevatedButton(
-                      child: const SizedBox(
-                          width: double.infinity,
-                          child: Center(child: Text('Borrar Usuarios'))),
-                      onPressed: () {
-                        //* Borrar todos los usuarios de la BBDD
-                        DBProvider.db.deleteAllUsers();
-                      }),
-                  const SizedBox(height: 10),
-                  ElevatedButton(
-                      onPressed: () {
-                        //! Navegamos a otra pantalla
-                        // Poner una pantalla encima (ofrece volver a la pantalla anterior en el AppBar)
-                        // Navigator.pushNamed(context, 'notificaciones');
-
-                        // pushReplacement destruye el stack de pantallas anterior (no puedes volver)
-                        Navigator.pushReplacementNamed(
-                            context, 'notificaciones');
-                      },
-                      child: const SizedBox(
-                          width: double.infinity,
-                          child:
-                              Center(child: Text('Pantalla Notificaciones')))),
-                  const SizedBox(height: 10),
-                  ElevatedButton(
-                      onPressed: () {
-                        Navigator.pushNamed(context, 'rest');
-                      },
-                      child: const SizedBox(
-                          width: double.infinity,
-                          child: Center(child: Text('REST'))))
         ]
      )
     );  
