@@ -116,4 +116,11 @@ class DBProvider {
     print('Se han borrado todos los Usuarios');
     return res;
   }
+  
+  Future<String> getHabitos() async {
+    final db = await database;
+    final res = await db!.query('Users');
+
+    return res.isNotEmpty ? res[0]['intensidad'].toString() : "null";
+  }
 }

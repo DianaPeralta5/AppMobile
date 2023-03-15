@@ -3,6 +3,7 @@ import 'package:formulario/widgets/custom_input_field.dart';
 import 'package:formulario/models/user_model.dart';
 import 'package:formulario/providers/db_provider.dart';
 import 'package:formulario/widgets/custom_input_field.dart';
+import 'package:formulario/Screens/api.dart';
 
 final GlobalKey<FormState> UsuarioKey = GlobalKey<FormState>();
 
@@ -44,7 +45,7 @@ class FormularioState extends State<StatefulWidget>{
        appBar: AppBar(
         backgroundColor: Colors.white,
           title: Image.asset(
-            'assets/logo.jpg',
+            'assets/logo.png',
             height: 45,
           ),
           centerTitle: true,          
@@ -227,7 +228,7 @@ class _Formulario2State extends State<Formulario2Screen>{
       appBar: AppBar(
         backgroundColor: Colors.white,
           title: Image.asset(
-            'assets/logo.jpg',
+            'assets/logo.png',
             height: 45,
           ),
           centerTitle: true,          
@@ -407,7 +408,7 @@ class Formulario3 extends State<StatefulWidget>{
       appBar: AppBar(
         backgroundColor: Colors.white,
           title: Image.asset(
-            'assets/logo.jpg',
+            'assets/logo.png',
             height: 45,
           ),
           centerTitle: true,          
@@ -545,6 +546,12 @@ class Formulario3 extends State<StatefulWidget>{
                 habitos: datosUsuario['habitos']!
               );
               DBProvider.db.nuevoUser(user);
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => PantallaDatos()
+                ),
+              );
             },
           ),
         ]
@@ -563,7 +570,7 @@ class Formulario3 extends State<StatefulWidget>{
         appBar: AppBar(
         backgroundColor: Colors.white,
           title: Image.asset(
-            'assets/logo.jpg',
+            'assets/logo.png',
             height: 45,
           ),
           centerTitle: true,          

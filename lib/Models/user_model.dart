@@ -45,6 +45,7 @@ class UserModel {
     actividad: json["actividad"],
     habitos: json["habitos"],
   );
+  
 
   Map<String, dynamic> toJson() => {
         "id": id,
@@ -60,10 +61,12 @@ class UserModel {
         "habitos": habitos
   };
 
+
   @override
   String toString() {
     String toString =
         'id: $id\nNombre: $nombre\naEdad: $edad\nSexo: $sexo\nEmbarazo: $embarazo\nPeso: $peso\naAltura: $altura\nPatologia: $patologia\nActividad: $actividad\nHabitos: $habitos';
     return toString;
   }
+  
 }
