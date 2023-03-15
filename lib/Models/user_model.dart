@@ -11,38 +11,39 @@ class UserModel {
     required this.nombre,
     required this.edad,
     required this.sexo,
+    this.embarazo = '',
     required this.peso,
     required this.altura,
-    this.actividad = '',
-    this.patologia = '',
-    this.farmaco = '',
-    this.habitos = '',
-    // this.embarazo,
+    this.patologia = ' ',
+    this.farmaco = ' ',
+    this.actividad = ' ',
+    this.habitos = ' ',
    });
 
   int? id;
   String nombre;  
   String edad;
   String sexo;
+  String embarazo;
   String peso;
   String altura;
-  String actividad; 
   String? patologia;
   String? farmaco;
+  String? actividad;
   String? habitos;
-  // bool? embarazo = false;
   
   factory UserModel.fromJson(Map<String, dynamic> json) => UserModel(
     id: json["id"],
     nombre: json["nombre"],
     edad: json["edad"],
     sexo: json["sexo"],
+    embarazo: json["embarazo"],
     peso: json["sexo"],
     altura: json["sexo"],
     patologia: json["patologia"],
     farmaco: json["farmaco"],
+    actividad: json["actividad"],
     habitos: json["habitos"],
-    // embarazo: json["embarazo"],
   );
 
   Map<String, dynamic> toJson() => {
@@ -51,18 +52,18 @@ class UserModel {
         "edad": edad,
         "sexo": sexo,
         "peso": peso,
+        "embarazo": embarazo,
         "altura": altura,
-        "actividad": actividad,
         "patologia": patologia,
         "farmaco": farmaco,
+        "actividad": actividad,
         "habitos": habitos
   };
 
   @override
   String toString() {
     String toString =
-        'id: $id\nnombre: $nombre\naEdad: $edad\nSexo: $sexo\nPeso: $peso\naAltura: $altura\nNivel de actividad: $actividad\nPatologia: $patologia\Farmaco: $farmaco' + 
-        '\nHabitos: $habitos';
+        'id: $id\nNombre: $nombre\naEdad: $edad\nSexo: $sexo\nEmbarazo: $embarazo\nPeso: $peso\naAltura: $altura\nPatologia: $patologia\nActividad: $actividad\nHabitos: $habitos';
     return toString;
   }
 }

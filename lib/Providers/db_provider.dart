@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:formulario/Screens/form.dart';
 import 'package:formulario/models/user_model.dart';
 import 'package:path/path.dart';
@@ -25,7 +24,7 @@ class DBProvider {
     final path = join(documentsDirectory.path, 'TestDB.db');
 
     // Crear base de datos
-    return await openDatabase(path, version: 1, onOpen: (db) {},
+    return await openDatabase(path, version: 6, onOpen: (db) {},
         onCreate: (Database db, int version) async {
       await db.execute('''
           CREATE TABLE Users(
@@ -33,34 +32,59 @@ class DBProvider {
             nombre TEXT,
             edad TEXT,
             sexo TEXT,
+            embarazo TEXT,
             peso TEXT,
             altura TEXT,
             patologia TEXT,
-            farmaco TEXT
+            farmaco TEXT,
+            actividad TEXT,
             habitos TEXT
           )
         ''');
-    });
+      },
+      onUpgrade: (db, oldVersion, newVersion) async {
+        await db.execute('''
+              DROP TABLE Users
+          ''');
+        await db.execute('''
+          CREATE TABLE Users(
+            id INTEGER PRIMARY KEY,
+            nombre TEXT,
+            edad TEXT,
+            sexo TEXT,
+            embarazo TEXT,
+            peso TEXT,
+            altura TEXT,
+            patologia TEXT,
+            farmaco TEXT,
+            actividad TEXT,
+            habitos TEXT
+          )
+        ''');
+      },
+    );
   }
+
 
   Future<int> nuevoUserRaw(UserModel nuevoUser) async {
     final id = nuevoUser.id;
     final nombre = nuevoUser.nombre;
     final edad = nuevoUser.edad;
     final sexo = nuevoUser.sexo;
+    final embarazo = nuevoUser.embarazo;
     final peso = nuevoUser.peso;
     final altura = nuevoUser.altura;
     final patologia = nuevoUser.patologia;
     final farmaco = nuevoUser.farmaco;
+    final actividad = nuevoUser.actividad;
     final habitos = nuevoUser.habitos;
-    // final embarazo = nuevoUser.embarazo;
 
     // Verificar la base de datos
     final db = await database;
 
     final res = await db!.rawInsert('''
-      INSERT INTO Users( id, nombre, apellidos, email, contrasena, tipo )
-        VALUES( $id, '$nombre', '$edad', '$sexo', '$peso', '$altura', '$patologia', '$farmaco', '$habitos')
+      INSERT INTO Users( id, nombre, edad, sexo, embarazo, peso, altura, patologia, farmaco, actividad, habitos)
+        VALUES($id, '$nombre', '$edad', '$sexo', '$embarazo','$peso', '$altura', '$patologia', '$farmaco', '$actividad', '$habitos')
     ''');
 
     return res;

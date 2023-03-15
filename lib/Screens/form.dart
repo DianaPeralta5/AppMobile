@@ -10,13 +10,13 @@ final Map<String, String> datosUsuario = {
       'nombre': '',
       'edad': '',
       'sexo': '',
+      'embarazo': '',
       'peso': '',
       'altura': '',
-      'actividad': '',
       'patologia': '',
       'farmaco': '',
-      'habitos': '',
-      // 'embarazo': '',
+      'actividad': '',
+      'habitos': ''
     };
 class FormularioScreen extends StatefulWidget {
   const FormularioScreen({super.key});
@@ -29,9 +29,11 @@ class FormularioScreen extends StatefulWidget {
 
 enum SingingCharacter { hombre, mujer}
 class FormularioState extends State<StatefulWidget>{
+    SingingCharacter? _character = SingingCharacter.hombre;
+    
   @override
   Widget build(BuildContext context) {
-    SingingCharacter? _character = SingingCharacter.hombre;
+    datosUsuario['sexo'] = 'hombre';    
     formItemsDesign(icon, item) {
       return Padding(
         padding: EdgeInsets.symmetric(vertical: 7),
@@ -47,10 +49,11 @@ class FormularioState extends State<StatefulWidget>{
           ),
           centerTitle: true,          
         ),
-      body: Column(
+      body: SingleChildScrollView(
+        child: Column(
         children: <Widget>[
         Container(
-          child: Padding(
+          child: const Padding(
             padding: EdgeInsets.only (
                     top: 30.0,
                     bottom: 20.0
@@ -92,9 +95,9 @@ class FormularioState extends State<StatefulWidget>{
                   ),
                 ),
                 Container(
-                  child: Text(
+                  child: const Text(
                     "Sexo: ",
-                    style: const TextStyle(fontWeight: FontWeight.bold)
+                    style: TextStyle(fontWeight: FontWeight.bold)
                   ),
                 ),
                 ListTile(
@@ -102,10 +105,10 @@ class FormularioState extends State<StatefulWidget>{
                   leading: Radio<SingingCharacter>(
                     value: SingingCharacter.hombre,
                     groupValue: _character,
-                    onChanged: (SingingCharacter? value) {
+                    onChanged: (value) {
+                      datosUsuario['sexo'] = 'Hombre';
                       setState(() {
                         _character = value;
-                        datosUsuario['sexo'] = 'Hombre';
                       });
                     },
                   ),
@@ -115,12 +118,33 @@ class FormularioState extends State<StatefulWidget>{
                   leading: Radio<SingingCharacter>(
                     value: SingingCharacter.mujer,
                     groupValue: _character,
-                    onChanged: (SingingCharacter? value) {
+                    onChanged: (value) {
+                      datosUsuario['sexo'] = 'Mujer';
                       setState(() {
                         _character = value;
-                        datosUsuario['sexo'] = 'Mujer';
                       });
                     },
+                  ),
+                ),
+                const SizedBox(height: 30),
+                Container(
+                  child: const Text(
+                    "Embarazo: ",
+                    style: TextStyle(fontWeight: FontWeight.bold)
+                  ),
+                ),
+                Container(
+                  child: Padding(
+                    padding: const EdgeInsets.all(20),
+                    child: DropdownButtonFormField<String>(
+                        value: 'Si',
+                        items: const [
+                          DropdownMenuItem(value: 'Si', child: Text('Si')),
+                          DropdownMenuItem(value: 'No', child: Text('No')),
+                        ],
+                        onChanged: (value) {
+                        datosUsuario['embarazo'] = datosUsuario['embarazo'] == ""  ? 'Si' : value!;
+                        }),
                   ),
                 ),
                 formItemsDesign(
@@ -175,6 +199,7 @@ class FormularioState extends State<StatefulWidget>{
         )
       ]
     ),
+      )
   );   
   }
 }
@@ -194,9 +219,10 @@ enum farmaco { si, no, nada}
 class _Formulario2State extends State<Formulario2Screen>{
      farmaco? _farmaco = farmaco.no;
      patologia? _patologia = patologia.no;
-
   @override
   Widget build(BuildContext context) {
+    datosUsuario['farmaco'] = 'no';
+    datosUsuario['patologia'] = 'no';
     return  Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
@@ -243,7 +269,8 @@ class _Formulario2State extends State<Formulario2Screen>{
           leading: Radio<farmaco>(
             value: farmaco.si,
             groupValue: _farmaco,
-            onChanged: (farmaco? value) {
+            onChanged: (value) {
+              datosUsuario['farmaco'] = 'si';
               setState(() {
                 _farmaco = value;
               });
@@ -255,7 +282,8 @@ class _Formulario2State extends State<Formulario2Screen>{
           leading: Radio<farmaco>(
             value: farmaco.no,
             groupValue: _farmaco,
-            onChanged: (farmaco? value) {
+            onChanged: (value) {
+              datosUsuario['farmaco'] = 'no';
               setState(() {
                 _farmaco = value;
               });
@@ -267,7 +295,8 @@ class _Formulario2State extends State<Formulario2Screen>{
           leading: Radio<farmaco>(
             value: farmaco.nada,
             groupValue: _farmaco,
-            onChanged: (farmaco? value) {
+            onChanged: (value) {
+              datosUsuario['farmaco'] = 'no';
               setState(() {
                 _farmaco = value;
               });
@@ -294,7 +323,8 @@ class _Formulario2State extends State<Formulario2Screen>{
           leading: Radio<patologia>(
             value: patologia.si,
             groupValue: _patologia,
-            onChanged: (patologia? value) {
+            onChanged: (value) {
+                datosUsuario['patologia'] = 'si';
               setState(() {
                 _patologia = value;
               });
@@ -306,7 +336,8 @@ class _Formulario2State extends State<Formulario2Screen>{
           leading: Radio<patologia>(
             value: patologia.no,
             groupValue: _patologia,
-            onChanged: (patologia? value) {
+            onChanged: (value) {
+                datosUsuario['patologia'] = 'no';
               setState(() {
                 _patologia = value;
               });
@@ -318,7 +349,8 @@ class _Formulario2State extends State<Formulario2Screen>{
           leading: Radio<patologia>(
             value: patologia.nada,
             groupValue: _patologia,
-            onChanged: (patologia? value) {
+            onChanged: (value) {
+                datosUsuario['patologia'] = 'no';
               setState(() {
                 _patologia = value;
               });
@@ -365,11 +397,12 @@ class Formulario3Screen extends StatefulWidget {
   }
 }
 
-enum actividad { ligera, moderada, activa, muy}
+enum habitos { ligera, moderada, activa, muy}
 class Formulario3 extends State<StatefulWidget>{
-     actividad? _actividad = actividad.activa;
+     habitos? _habitos = habitos.activa;
   @override
   Widget build(BuildContext context) {
+    datosUsuario['habitos'] = 'activa';
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
@@ -398,6 +431,32 @@ class Formulario3 extends State<StatefulWidget>{
             ),
           ),
           Container(
+                  child: const Text(
+                    "Selector de Actividad: ",
+                    style: TextStyle(fontWeight: FontWeight.bold)
+                  ),
+                ),
+                Container(
+                  child: Padding(
+                    padding: const EdgeInsets.all(20),
+                    child:  DropdownButtonFormField<String>(
+                      value: 'Agricultura',
+                      items: const [
+                        DropdownMenuItem(
+                            value: 'Agricultura', child: Text('Agricultura')),
+                        DropdownMenuItem(
+                            value: 'Industria', child: Text('Industria')),
+                        DropdownMenuItem(
+                            value: 'Construccion', child: Text('Construccion')),
+                        DropdownMenuItem(
+                            value: 'Servicios', child: Text('Servicios')),
+                      ],
+                      onChanged: (value) {
+                        datosUsuario['actividad'] = datosUsuario['actividad'] == ""  ? 'Agricultura' : value!;
+                      }),
+                  ),
+                ),
+          Container(
             child: Padding(
               padding: EdgeInsets.only (
                 top: 20.0,
@@ -414,52 +473,52 @@ class Formulario3 extends State<StatefulWidget>{
           ),
           ListTile(
             title: const Text('Ligera'),
-            leading: Radio<actividad>(
-              value: actividad.ligera,
-              groupValue: _actividad,
-              onChanged: (actividad? value) {
+            leading: Radio<habitos>(
+              value: habitos.ligera,
+              groupValue: _habitos,
+              onChanged: (value) {
+                datosUsuario['habitos'] = 'ligera';
                 setState(() {
-                  _actividad = value;
-                datosUsuario['habitos'] = 'Ligera';
+                  _habitos = value;
                 });
               },
             ),
           ),
           ListTile(
             title: const Text('Moderada'),
-            leading: Radio<actividad>(
-              value: actividad.moderada,
-              groupValue: _actividad,
-              onChanged: (actividad? value) {
+            leading: Radio<habitos>(
+              value: habitos.moderada,
+              groupValue: _habitos,
+              onChanged: (value) {
+                datosUsuario['habitos'] = 'moderada';
                 setState(() {
-                  _actividad = value;
-                datosUsuario['habitos'] = 'Moderada';
+                  _habitos = value;
                 });
               },
             ),
           ),
           ListTile(
             title: const Text('Activa'),
-            leading: Radio<actividad>(
-              value: actividad.activa,
-              groupValue: _actividad,
-              onChanged: (actividad? value) {
+            leading: Radio<habitos>(
+              value: habitos.activa,
+              groupValue: _habitos,
+              onChanged: (value) {
+                datosUsuario['habitos'] = 'activa';
                 setState(() {
-                  _actividad = value;
-                datosUsuario['habitos'] = 'Activa';
+                  _habitos = value;
                 });
               },
             ),
           ),
           ListTile(
             title: const Text('Muy activa'),
-            leading: Radio<actividad>(
-              value: actividad.muy,
-              groupValue: _actividad,
-              onChanged: (actividad? value) {
+            leading: Radio<habitos>(
+              value: habitos.muy,
+              groupValue: _habitos,
+              onChanged: (value) {
+                datosUsuario['habitos'] = 'muy';
                 setState(() {
-                  _actividad = value;
-                  datosUsuario['habitos'] = 'Muy activa';
+                  _habitos = value;
                 });
               },
             ),
@@ -473,19 +532,63 @@ class Formulario3 extends State<StatefulWidget>{
                 print('Formulario no válido');
                 return;
               }
-              // UserModel user = UserModel(
-              //   nombre: datosUsuario['nombre']!,
-              //   edad: datosUsuario['edad']!,
-              //   sexo: datosUsuario['sexo']!,
-              //   peso: datosUsuario['peso']!,
-              //   altura: datosUsuario['altura']!,
-              //   patologia: datosUsuario['patologia']!,
-              //   farmaco: datosUsuario['farmaco']!,
-              //   habitos: datosUsuario['habitos']!
-              // );
-              // DBProvider.db.nuevoUser(user);
+              UserModel user = UserModel(
+                nombre: datosUsuario['nombre']!,
+                edad: datosUsuario['edad']!,
+                sexo: datosUsuario['sexo']!,
+                embarazo: datosUsuario['embarazo']!,
+                peso: datosUsuario['peso']!,
+                altura: datosUsuario['altura']!,
+                patologia: datosUsuario['patologia']!,
+                farmaco: datosUsuario['farmaco']!,
+                actividad: datosUsuario['actividad']!,
+                habitos: datosUsuario['habitos']!
+              );
+              DBProvider.db.nuevoUser(user);
             },
           ),
+          const SizedBox(height: 10),
+                  ElevatedButton(
+                    child: const SizedBox(
+                        width: double.infinity,
+                        child: Center(child: Text('Listar Usuarios'))),
+                    onPressed: () {
+                      //* Mostrar usuarios de la BD
+                      DBProvider.db.getTodosLosUsers();
+                    },
+                  ),
+                  const SizedBox(height: 10),
+                  ElevatedButton(
+                      child: const SizedBox(
+                          width: double.infinity,
+                          child: Center(child: Text('Borrar Usuarios'))),
+                      onPressed: () {
+                        //* Borrar todos los usuarios de la BBDD
+                        DBProvider.db.deleteAllUsers();
+                      }),
+                  const SizedBox(height: 10),
+                  ElevatedButton(
+                      onPressed: () {
+                        //! Navegamos a otra pantalla
+                        // Poner una pantalla encima (ofrece volver a la pantalla anterior en el AppBar)
+                        // Navigator.pushNamed(context, 'notificaciones');
+
+                        // pushReplacement destruye el stack de pantallas anterior (no puedes volver)
+                        Navigator.pushReplacementNamed(
+                            context, 'notificaciones');
+                      },
+                      child: const SizedBox(
+                          width: double.infinity,
+                          child:
+                              Center(child: Text('Pantalla Notificaciones')))),
+                  const SizedBox(height: 10),
+                  ElevatedButton(
+                      onPressed: () {
+                        Navigator.pushNamed(context, 'rest');
+                      },
+                      child: const SizedBox(
+                          width: double.infinity,
+                          child: Center(child: Text('REST'))))
         ]
      )
     );  
